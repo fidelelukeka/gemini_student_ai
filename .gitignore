@@ -1,0 +1,9 @@
+# Fichiers de configuration sensibles
+.env
+firebase_config.json
+
+# En général on ignore aussi :
+__pycache__/
+*.pyc
+venv/
+assistant-etudiant-isp-firebase-adminsdk-fbsvc-7f95772850.json

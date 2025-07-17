@@ -1,0 +1,8 @@
+[phases.setup]
+nixPkgs = ["python310"]
+
+[phases.build]
+cmds = ["pip install --upgrade pip", "pip install -r requirements.txt"]
+
+[phases.start]
+cmd = "python app.py"

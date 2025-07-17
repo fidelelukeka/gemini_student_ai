@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Assistant IA Étudiant</title>
+    <link rel="stylesheet" href="../static/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Assistant IA Étudiant</h1>
+
+      <form id="form">
+        <textarea id="question" rows="4" placeholder="Pose ta question ici..."></textarea><br />
+        <div class="actions">
+          <button id="askBtn" type="submit">Poser la question</button>
+          <button id="clearBtn" type="button">Effacer l’historique</button>
+        </div>
+      </form>
+
+      <div id="response" class="response" style="display: none"></div>
+
+      <h2>Historique</h2>
+      <div id="history" class="history"></div>
+    </div>
+
+    <script src="../static/scripts.js"></script>
+  </body>
+</html>

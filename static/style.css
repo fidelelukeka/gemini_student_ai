@@ -1,0 +1,141 @@
+/* style.css */
+body {
+  font-family: Arial, sans-serif;
+  background: #f2f2f2;
+  padding: 20px;
+  margin: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  resize: vertical;
+  font-size: 1rem;
+}
+
+button {
+  padding: 10px 20px;
+  margin-top: 10px;
+  margin-right: 10px;
+  background: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+button:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+
+.response {
+  margin-top: 20px;
+  background: #e6f7ff;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.history {
+  margin-top: 20px;
+}
+
+.response-item {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  background: #fefefe;
+  border: 1px solid #ddd;
+  border-radius: 16px;
+  margin-bottom: 15px;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeSlide 0.4s ease forwards;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  position: relative;
+}
+
+.response-item:nth-child(odd) {
+  background: #e0f0ff3b;
+  align-self: flex-start;
+  border-top-left-radius: 0;
+}
+
+.response-item:nth-child(even) {
+  background: #d1ffd64d;
+  align-self: flex-end;
+  border-top-right-radius: 0;
+}
+
+.question,
+.answer {
+  word-wrap: break-word;
+  padding: 6px 12px;
+  border-radius: 12px;
+  margin: 2px 0;
+}
+
+.question {
+  align-self: flex-start;
+}
+
+.answer {
+  background: #ffffff;
+  color: #333;
+  border: 1px solid #ccc;
+  align-self: flex-end;
+}
+
+.timestamp {
+  font-size: 0.75em;
+  color: gray;
+  font-style: italic;
+  position: relative;
+  white-space: nowrap;
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@keyframes fadeSlide {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 15px;
+  }
+
+  .response-item {
+    flex-direction: column;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
