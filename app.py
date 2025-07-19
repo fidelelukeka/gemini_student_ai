@@ -2,7 +2,7 @@ import os
 import firebase_admin
 from firebase_admin import credentials, firestore
 from flask import Flask, request, jsonify, render_template
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from flask_cors import CORS
 import google.generativeai as genai
 from dotenv import load_dotenv
@@ -27,6 +27,9 @@ firebase_config = {
     "client_x509_cert_url": os.getenv("FIREBASE_CLIENT_CERT_URL"),
     "universe_domain": os.getenv("FIREBASE_UNIVERSE_DOMAIN"),
 }
+
+utc_plus_2 = timezone(timedelta(hours=2))
+timestamp = datetime.now(utc_plus_2).isoformat()
 
 # Initialisation de Firebase Admin SDK avec dict au lieu du fichier JSON
 cred = credentials.Certificate(firebase_config)
@@ -94,7 +97,7 @@ def ask():
     db.collection("interactions").add({
         "question": question,
         "reponse": answer,
-        "timestamp": datetime.now(timezone.utc).isoformat()
+        "timestamp": timestamp
     })
 
     return jsonify({"answer": answer})
