@@ -2,7 +2,7 @@ import os
 import firebase_admin
 from firebase_admin import credentials, firestore
 from flask import Flask, request, jsonify, render_template
-from datetime import datetime
+from datetime import datetime, timezone
 from flask_cors import CORS
 import google.generativeai as genai
 from dotenv import load_dotenv
@@ -94,7 +94,7 @@ def ask():
     db.collection("interactions").add({
         "question": question,
         "reponse": answer,
-        "timestamp": datetime.utcnow().isoformat()
+        "timestamp": datetime.now(timezone.utc).isoformat()
     })
 
     return jsonify({"answer": answer})
