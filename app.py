@@ -58,12 +58,17 @@ def ask():
     except Exception as e:
         return jsonify({"error": f"Erreur en lisant le fichier : {str(e)}"}), 500
 
-    final_prompt = (
-        f"Tu es un assistant étudiant. Voici un extrait de cours :\n{context}\n\n"
-        f"Question : {question}\n"
-        "Réponds uniquement avec des informations présentes dans ce contenu. "
-        "Si la réponse n’est pas claire dans le texte, dis 'Je ne sais pas'. "
-        "Sois clair, précis et concis."
+    final_prompt = final_prompt = (
+        "Tu es un assistant étudiant bienveillant et compétent. "
+        "Tu aides à comprendre les cours, à résoudre des exercices, à écrire des algorithmes, et à utiliser des outils comme Algobox ou Pascal.\n\n"
+        f"Voici un extrait de cours :\n{context}\n\n"
+        f"Question de l'utilisateur : {question}\n\n"
+        "Ta réponse doit :\n"
+        "- Être **basée uniquement sur les informations contenues dans le texte** ci-dessus.\n"
+        "- Être claire, concise et compréhensible pour un étudiant débutant.\n"
+        "- Ne pas inventer d'informations hors contexte.\n"
+        "- Si la réponse ne peut pas être donnée à partir du document, **n'invente rien** : explique gentiment que la réponse ne figure pas dans l'extrait et invite l'utilisateur à préciser.\n\n"
+        "Commence toujours par une salutation brève si la question est ouverte. Sinon, donne directement la réponse attendue."
     )
 
     try:
@@ -72,14 +77,14 @@ def ask():
 
         # Détection améliorée des réponses vagues ou génériques
         vague_phrases = [
-            "ce document est", "ce texte est", "cet extrait est",
-            "ce contenu est", "ce passage explique", "ce cours est",
-            "il s'agit d'un document", "il s'agit d'un texte"
+            "ce document", "ce texte", "cet extrait", "ce contenu", "ce passage", "ce cours",
+            "il s'agit", "le document", "dans ce cours", "cet article"
         ]
-        if any(phrase in answer.lower() for phrase in vague_phrases):
+
+        if any(phrase in answer.lower() for phrase in vague_phrases) and not context.lower().strip() in answer.lower():
             answer = (
-                "Bonjour ! Je suis votre assistant IA étudiant. Veuillez poser une question "
-                "précise sur un document, un sujet ou un concept pour que je puisse vous aider."
+                "Bonjour ! Je suis un assistant étudiant. Pose-moi une question précise sur un extrait de cours ou une notion. "
+                "Je te répondrai en me basant uniquement sur le contenu fourni."
             )
 
     except Exception as e:
@@ -97,7 +102,7 @@ def ask():
 @app.route('/interactions', methods=['GET'])
 def get_interactions():
     docs = db.collection("interactions").order_by(
-        "timestamp", direction=firestore.Query.ASCENDING  # du plus ancien au plus récent
+        "timestamp", direction=firestore.Query.DESCENDING  # du plus récent au plus ancien
     ).limit(20).stream()
 
     interactions = [doc.to_dict() for doc in docs]
