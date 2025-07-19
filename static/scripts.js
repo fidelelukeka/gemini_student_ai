@@ -5,6 +5,23 @@ const questionInput = document.getElementById("question");
 const responseBox = document.getElementById("response");
 const historyBox = document.getElementById("history");
 
+function formatTimestamp(isoString) {
+  const date = new Date(isoString);
+
+  const options = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  };
+
+  return new Intl.DateTimeFormat("fr-FR", options).format(date);
+}
+
+
+
 // Fonction pour récupérer et afficher l'historique
 async function fetchHistory() {
   try {
@@ -18,10 +35,10 @@ async function fetchHistory() {
       div.style.animationDelay = `${index * 0.1}s`;
 
       div.innerHTML = `
-        <div class="timestamp">${new Date(item.timestamp).toLocaleString()}</div>
-        <div class="question">Q: ${item.question}</div>
-        <div class="answer">R: ${item.reponse}</div>
-      `;
+        <p><strong>Question :</strong> ${interaction.question}</p>
+        <p><strong>Réponse :</strong> ${interaction.reponse}</p>
+        <p class="timestamp">🕒 ${formatTimestamp(interaction.timestamp)}</p>
+    `;
 
       historyBox.appendChild(div);
     });
