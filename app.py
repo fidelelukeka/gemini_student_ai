@@ -28,9 +28,6 @@ firebase_config = {
     "universe_domain": os.getenv("FIREBASE_UNIVERSE_DOMAIN"),
 }
 
-utc_plus_2 = timezone(timedelta(hours=2))
-timestamp = datetime.now(utc_plus_2).isoformat()
-
 # Initialisation de Firebase Admin SDK avec dict au lieu du fichier JSON
 cred = credentials.Certificate(firebase_config)
 firebase_admin.initialize_app(cred)
@@ -92,6 +89,10 @@ def ask():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+    # Générer le timestamp local à chaque requête
+    utc_plus_2 = timezone(timedelta(hours=2))
+    timestamp = datetime.now(utc_plus_2).isoformat()
 
     # Sauvegarde dans Firestore
     db.collection("interactions").add({

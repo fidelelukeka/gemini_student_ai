@@ -35,13 +35,14 @@ async function fetchHistory() {
       div.style.animationDelay = `${index * 0.1}s`;
 
       div.innerHTML = `
-        <p><strong>Question :</strong> ${interaction.question}</p>
-        <p><strong>Réponse :</strong> ${interaction.reponse}</p>
-        <p class="timestamp">🕒 ${formatTimestamp(interaction.timestamp)}</p>
-    `;
+    <p><strong>Question :</strong> ${item.question}</p>
+    <p><strong>Réponse :</strong> ${item.reponse}</p>
+    <p class="timestamp">🕒 ${formatTimestamp(item.timestamp)}</p>
+  `;
 
       historyBox.appendChild(div);
     });
+
   } catch (err) {
     console.error("Erreur en récupérant l'historique :", err);
   }
